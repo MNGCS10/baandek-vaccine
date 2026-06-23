@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ตารางวัคซีนเด็ก — คลินิกบ้านเด็ก สุราษฎร์ธานี</title>
+  <meta name="description" content="คลินิกบ้านเด็ก สุราษฎร์ธานี — ตรวจสอบวัคซีนที่ลูกควรได้รับตามช่วงอายุ พร้อมราคาและแพ็กเกจโปร โทร 085-065-9715" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue-50:#E6F1FB;--blue-400:#378ADD;--blue-600:#185FA5;--blue-800:#0C447C;
+      --teal-50:#E1F5EE;--teal-600:#0F6E56;
+      --amber-50:#FAEEDA;--amber-800:#633806;
+      --gray-50:#F6F6F4;--gray-100:#EBEBEA;
+      --green-50:#EAF3DE;--green-600:#3B6D11;
+      --text:#1a1a19;--text-sec:#5F5E5A;--text-ter:#888780;
+      --border:rgba(0,0,0,.1);--border-md:rgba(0,0,0,.18);
+      --radius:10px;--radius-lg:14px;
+      --shadow:0 1px 3px rgba(0,0,0,.08);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Sarabun',sans-serif;background:var(--gray-50);color:var(--text);font-size:15px}
+    header{background:#fff;border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .brand{display:flex;align-items:center;gap:10px}
+    .brand-icon{width:42px;height:42px;border-radius:10px;object-fit:cover;flex-shrink:0}
+    .brand-name{font-size:15px;font-weight:600;color:var(--text)}
+    .brand-tag{font-size:12px;color:var(--text-sec)}
+    .header-cta{background:var(--blue-600);color:#fff;border:none;padding:8px 16px;border-radius:8px;font-family:'Sarabun',sans-serif;font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;display:inline-block}
+    .container{max-width:900px;margin:0 auto;padding:20px 16px 60px}
+    .hero{text-align:center;padding:28px 16px 20px}
+    .hero h1{font-size:22px;font-weight:600;margin-bottom:6px}
+    .hero p{font-size:14px;color:var(--text-sec)}
+    .search-wrap{position:relative;max-width:380px;margin:16px auto 0}
+    .search-wrap input{width:100%;padding:10px 16px 10px 40px;border:1px solid var(--border-md);border-radius:999px;font-family:'Sarabun',sans-serif;font-size:14px;background:#fff;outline:none;color:var(--text)}
+    .search-wrap input:focus{border-color:var(--blue-600)}
+    .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--text-ter)}
+    .age-section{margin-bottom:20px}
+    .section-label{font-size:12px;font-weight:500;color:var(--text-sec);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+    .age-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px}
+    .age-btn{padding:10px 4px;border-radius:var(--radius);border:1px solid var(--border-md);background:#fff;cursor:pointer;text-align:center;font-family:'Sarabun',sans-serif;transition:all .15s;box-shadow:var(--shadow)}
+    .age-btn:hover{border-color:var(--blue-400);background:var(--blue-50)}
+    .age-btn.active{border:2px solid var(--blue-600);background:var(--blue-50)}
+    .age-btn .al{font-size:13px;font-weight:600;color:var(--text);display:block}
+    .age-btn .as{font-size:10px;color:var(--text-sec);display:block;margin-top:2px}
+    .age-btn.active .al{color:var(--blue-800)}
+    #detail{display:none;animation:fadeIn .2s ease}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+    .metric{background:#fff;border-radius:var(--radius);padding:14px;border:1px solid var(--border);box-shadow:var(--shadow)}
+    .ml{font-size:11px;color:var(--text-sec);margin-bottom:4px}
+    .mv{font-size:22px;font-weight:600}
+    .mv.blue{color:var(--blue-600)}
+    .mv.green{color:var(--teal-600)}
+    .note-box{background:var(--blue-50);border:1px solid #B5D4F4;border-radius:var(--radius);padding:10px 14px;margin-bottom:16px;font-size:13px;color:var(--blue-800);display:flex;gap:8px;align-items:flex-start;line-height:1.6}
+    .vax-section{margin-bottom:16px}
+    .vax-section-title{font-size:11px;font-weight:600;color:var(--text-sec);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+    .vax-item{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;box-shadow:var(--shadow);gap:10px}
+    .vax-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+    .vax-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+    .vax-dot.epi{background:var(--blue-600)}
+    .vax-dot.opt{background:#EF9F27}
+    .vax-info{min-width:0}
+    .vax-name{font-size:14px;font-weight:600;color:var(--text)}
+    .vax-nameTH{font-size:12px;color:var(--text-sec)}
+    .vax-note-text{font-size:11px;color:var(--text-ter);font-style:italic;margin-top:1px}
+    .vax-right{text-align:right;flex-shrink:0}
+    .vax-price{font-size:15px;font-weight:600;color:var(--text)}
+    .vax-dose{font-size:11px;color:var(--text-sec);margin-top:1px}
+    .badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:600}
+    .badge.epi{background:var(--blue-50);color:var(--blue-800)}
+    .badge.opt{background:var(--amber-50);color:var(--amber-800)}
+    .pro-card{background:linear-gradient(135deg,#0C447C 0%,#185FA5 100%);border-radius:var(--radius-lg);padding:18px;margin-bottom:16px;color:#fff;display:flex;align-items:center;gap:14px}
+    .pro-icon{font-size:28px;flex-shrink:0}
+    .pro-info{flex:1}
+    .pro-label{font-size:13px;opacity:.8;margin-bottom:2px}
+    .pro-name{font-size:16px;font-weight:600;margin-bottom:4px}
+    .pro-detail{font-size:12px;opacity:.75}
+    .pro-price-col{text-align:right;flex-shrink:0}
+    .pro-orig{font-size:12px;opacity:.6;text-decoration:line-through}
+    .pro-price{font-size:26px;font-weight:700}
+    .pro-save{font-size:11px;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 8px;margin-top:4px;display:inline-block}
+    .cta-row{display:flex;gap:10px}
+    .btn-primary{flex:1;padding:13px;background:var(--blue-600);color:#fff;border:none;border-radius:var(--radius);font-family:'Sarabun',sans-serif;font-size:14px;font-weight:600;cursor:pointer;text-align:center;text-decoration:none;display:block}
+    .btn-primary:hover{background:var(--blue-800)}
+    .btn-secondary{flex:1;padding:13px;background:#fff;color:var(--text);border:1px solid var(--border-md);border-radius:var(--radius);font-family:'Sarabun',sans-serif;font-size:14px;font-weight:500;cursor:pointer;text-align:center;text-decoration:none;display:block}
+    .total-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--gray-100);border-radius:var(--radius);margin-bottom:6px;font-size:13px}
+    .total-bar.highlight{background:var(--teal-50);color:var(--teal-600);font-weight:600}
+    .empty{text-align:center;padding:48px 20px;color:var(--text-sec)}
+    .empty-icon{font-size:40px;display:block;margin-bottom:10px}
+    footer{background:#fff;border-top:1px solid var(--border);padding:16px 20px;text-align:center;font-size:12px;color:var(--text-sec)}
+    @media(max-width:480px){.metrics{grid-template-columns:repeat(3,1fr)}.mv{font-size:17px}.pro-card{flex-direction:column;text-align:center}.cta-row{flex-direction:column}}
+
+    .promo-bar{background:#0F6E56;color:#fff;padding:10px 20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+    .promo-badge{background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:11px;font-weight:600;white-space:nowrap}
+    .promo-text{font-size:13px;font-weight:500;flex:1;min-width:200px}
+    .promo-sub{font-size:11px;opacity:.8;margin-top:1px}
+    .promo-cta{background:#fff;color:#0F6E56;border-radius:999px;padding:6px 14px;font-size:12px;font-weight:600;text-decoration:none;white-space:nowrap;font-family:"Sarabun",sans-serif}
+    .promo-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:18px;cursor:pointer;padding:0 4px;line-height:1;margin-left:4px}
+
+    .db-loader{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,.85);z-index:999;align-items:center;justify-content:center;flex-direction:column;gap:10px}
+    .db-spinner{width:32px;height:32px;border:3px solid #E6F1FB;border-top-color:#185FA5;border-radius:50%;animation:spin .8s linear infinite}
+    .db-loader-text{font-size:13px;color:#5F5E5A}
+    @keyframes spin{to{transform:rotate(360deg)}}
+  </style>
+</head>
+<body>
+
+
+<div class="db-loader" id="db-loader"><div class="db-spinner"></div><div class="db-loader-text">กำลังโหลดราคาล่าสุด...</div></div>
+<header>
+  <div class="brand">
+    <img src="logo.jpg" alt="คลินิกบ้านเด็ก" style="width:42px;height:42px;border-radius:10px;object-fit:cover;flex-shrink:0">
+    <div>
+      <div class="brand-name" id="clinic-name">คลินิกสุขภาพเด็ก</div>
+      <div class="brand-tag">ตารางวัคซีนตามช่วงอายุ</div>
+    </div>
+  </div>
+  <a href="#" id="header-phone" class="header-cta">📞 โทรนัด</a>
+</header>
+<div class="promo-bar" id="promo-bar" style="display:none"><span class="promo-badge" id="promo-badge"></span><div style="flex:1;min-width:0"><div class="promo-text" id="promo-title"></div><div class="promo-sub" id="promo-detail"></div></div><div style="display:flex;align-items:center;gap:6px;flex-shrink:0"><a class="promo-cta" id="promo-cta" href="#" target="_blank"></a><div id="promo-dots" style="display:flex;gap:4px;margin:0 4px"></div><button class="promo-close" onclick="document.getElementById('promo-bar').style.display='none'" aria-label="ปิด">&times;</button></div></div>
+
+<div class="container">
+  <div class="hero">
+    <h1>💉 วัคซีนลูกครบไหม?</h1>
+    <p>เลือกช่วงอายุเพื่อดูวัคซีนที่ควรได้รับ พร้อมราคาและแพ็กเกจโปร</p>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input id="search" type="text" placeholder="ค้นหา เช่น MMR, โปลิโอ, 3 ปี..." oninput="onSearch(this.value)" />
+    </div>
+  </div>
+
+  <div class="age-section">
+    <div class="section-label">เลือกช่วงอายุ</div>
+    <div class="age-grid" id="age-grid"></div>
+  </div>
+
+  <div id="detail"></div>
+
+  <div id="empty-state" class="empty">
+    <span class="empty-icon">👆</span>
+    <h3>เลือกช่วงอายุด้านบน</h3>
+    <p>เพื่อดูรายการวัคซีนและราคา</p>
+  </div>
+</div>
+
+<footer>
+  สงวนลิขสิทธิ์ © 2569 คลินิกบ้านเด็ก • ข้อมูลอ้างอิงจาก PIDST อัปเดต 2024<br>
+  ปรึกษาแพทย์ก่อนตัดสินใจฉีดวัคซีนทุกครั้ง<br><span id="db-status" style="font-size:11px;color:#888;margin-top:4px;display:block"></span>
+</footer>
+
+<script>
+// ============================================================
+// 🔌 GOOGLE SHEET DATABASE CONFIG
+// ใส่ URL จาก Apps Script Web App ตรงนี้
+// ============================================================
+var SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwQj7uGZbPDJQUMnk-kJ9LFlMz404_JMiHDrjVBrDs83ejmsq186bPV_2UihSltBZkq8A/exec";
+// ตัวอย่าง: "https://script.google.com/macros/s/AKfyc.../exec"
+
+// ── Fallback defaults (ใช้เมื่อ Sheet โหลดไม่ได้) ──
+var CLINIC = {
+  name: "คลินิกบ้านเด็ก",
+  phone: "0850659715",
+  line: "@116hbawh",
+  address: "สุราษฎร์ธานี"
+};
+
+// รองรับหลายโปร — เพิ่มใน Google Sheet Sheet PROMOS
+// fallback defaults ถ้า Sheet โหลดไม่ได้
+var PROMOS = [
+  {
+    active: true,
+    badge: "โปรเดือนนี้",
+    title: "ฉีดวัคซีนครบชุด รับส่วนลด 15%",
+    detail: "ลูกค้าใหม่จองผ่าน LINE • หมดเขต 31 ก.ค. นี้",
+    cta: "รับโปร LINE",
+    ctaUrl: "https://line.me/ti/p/@116hbawh"
+  }
+];
+var PROMO = PROMOS[0]; // backward compat
+
+var VACCINES = {
+  BCG:        { name:"BCG",          nameTH:"วัคซีนวัณโรค",                 price:350  },
+  HBV:        { name:"HBV",          nameTH:"ไวรัสตับอักเสบ บี",            price:200  },
+  DTP_HB_Hib: { name:"DTP-HB-Hib",  nameTH:"คอตีบ-บาดทะยัก-ไอกรน-Hib",   price:800  },
+  IPV:        { name:"IPV",          nameTH:"โปลิโอชนิดฉีด",               price:600  },
+  RV:         { name:"Rotavirus",    nameTH:"โรตาไวรัส",                    price:1200 },
+  PCV:        { name:"IPD (PCV)",    nameTH:"ปอดอักเสบ/เยื่อหุ้มสมอง",    price:2200 },
+  JE:         { name:"JE",           nameTH:"ไข้สมองอักเสบ",                price:400  },
+  MMR:        { name:"MMR",          nameTH:"หัด-คางทูม-หัดเยอรมัน",       price:500  },
+  VAR:        { name:"Varicella",    nameTH:"อีสุกอีใส",                    price:1100 },
+  HEPA:       { name:"Hepatitis A",  nameTH:"ไวรัสตับอักเสบ เอ",           price:900  },
+  FLU:        { name:"Influenza",    nameTH:"ไข้หวัดใหญ่",                 price:500  },
+  DTP:        { name:"DTP",          nameTH:"คอตีบ-บาดทะยัก-ไอกรน",       price:300  },
+  HPV:        { name:"HPV",          nameTH:"มะเร็งปากมดลูก",              price:3200 },
+  TYPHOID:    { name:"Typhoid",      nameTH:"ไข้ไทฟอยด์",                  price:600  }
+};
+
+var SCHEDULE = [
+  { id:"newborn", label:"แรกเกิด",  sublabel:"0–1 เดือน",      note:"ฉีดในโรงพยาบาลทันทีหลังคลอด BCG ป้องกันวัณโรคระยะรุนแรงในทารก",
+    vaccines:[{ref:"BCG",type:"epi",dose:1},{ref:"HBV",type:"epi",dose:1}],
+    package:{label:"แพ็กเกจแรกเกิด",normalPrice:550,proPrice:450,save:100} },
+  { id:"m1",      label:"1 เดือน",  sublabel:"4–6 สัปดาห์",    note:"กระตุ้นภูมิคุ้มกันตับอักเสบ บี เข็มที่ 2 ตามกำหนดนัด",
+    vaccines:[{ref:"HBV",type:"epi",dose:2}],
+    package:{label:"แพ็กเกจ 1 เดือน",normalPrice:200,proPrice:180,save:20} },
+  { id:"m2",      label:"2 เดือน",  sublabel:"6–14 สัปดาห์",   note:"เริ่มชุดวัคซีนหลัก ฉีดได้ 4–5 เข็มในวันเดียว เตรียมผ้าเย็นและยาลดไข้ไว้",
+    vaccines:[{ref:"DTP_HB_Hib",type:"epi",dose:1},{ref:"IPV",type:"epi",dose:1},{ref:"RV",type:"opt",dose:1},{ref:"PCV",type:"opt",dose:1}],
+    package:{label:"แพ็กเกจ 2 เดือน",normalPrice:5300,proPrice:4500,save:800} },
+  { id:"m4",      label:"4 เดือน",  sublabel:"3.5–5 เดือน",    note:"กระตุ้นซ้ำชุดเดิม ห่างจากครั้งแรก 2 เดือน ภูมิคุ้มกันจะสูงขึ้นชัดเจน",
+    vaccines:[{ref:"DTP_HB_Hib",type:"epi",dose:2},{ref:"IPV",type:"epi",dose:2},{ref:"RV",type:"opt",dose:2},{ref:"PCV",type:"opt",dose:2}],
+    package:{label:"แพ็กเกจ 4 เดือน",normalPrice:5300,proPrice:4500,save:800} },
+  { id:"m6",      label:"6 เดือน",  sublabel:"5.5–8 เดือน",    note:"เริ่มฉีดไข้หวัดใหญ่ได้ตั้งแต่ 6 เดือน ในไทยมีระบาดทุกปี แนะนำอย่างยิ่ง",
+    vaccines:[{ref:"DTP_HB_Hib",type:"epi",dose:3},{ref:"HBV",type:"epi",dose:3},{ref:"RV",type:"opt",dose:3,note:"เฉพาะยี่ห้อ 3 เข็ม"},{ref:"PCV",type:"opt",dose:3},{ref:"FLU",type:"opt",dose:1,note:"ฉีด 2 เข็มห่างกัน 1 เดือน ครั้งแรก"}],
+    package:{label:"แพ็กเกจ 6 เดือน",normalPrice:5200,proPrice:4500,save:700} },
+  { id:"m9",      label:"9 เดือน",  sublabel:"8–11 เดือน",     note:"JE สำคัญมากในไทย ยุงเป็นพาหะ เด็กเล็กเสี่ยงสูง",
+    vaccines:[{ref:"JE",type:"epi",dose:1},{ref:"PCV",type:"opt",dose:4,note:"บูสเตอร์"}],
+    package:{label:"แพ็กเกจ 9 เดือน",normalPrice:2800,proPrice:2400,save:400} },
+  { id:"y1",      label:"1 ปี",     sublabel:"11–15 เดือน",    note:"ครบ 1 ขวบ MMR 1 เข็มป้องกัน 3 โรค ควรเช็กว่าฉีดครบทุกเข็มก่อนหน้า",
+    vaccines:[{ref:"MMR",type:"epi",dose:1},{ref:"JE",type:"epi",dose:2},{ref:"VAR",type:"opt",dose:1},{ref:"HEPA",type:"opt",dose:1}],
+    package:{label:"แพ็กเกจ 1 ขวบ",normalPrice:3700,proPrice:2800,save:900} },
+  { id:"y1h",     label:"1.5 ปี",   sublabel:"15–24 เดือน",    note:"บูสเตอร์ DTP สำคัญ ไม่ฉีดภูมิคุ้มกันจะลดลงก่อนวัย ส่งผลถึงช่วงอนุบาล",
+    vaccines:[{ref:"DTP_HB_Hib",type:"epi",dose:4,note:"บูสเตอร์"},{ref:"IPV",type:"epi",dose:3},{ref:"VAR",type:"opt",dose:2,note:"กระตุ้น"}],
+    package:{label:"แพ็กเกจ 1.5 ปี",normalPrice:2800,proPrice:2200,save:600} },
+  { id:"y2",      label:"2–3 ปี",   sublabel:"24–42 เดือน",    note:"EPI พื้นฐานครบแล้ว เน้นวัคซีนเสริมและไข้หวัดใหญ่ประจำปี",
+    vaccines:[{ref:"FLU",type:"opt",dose:0,note:"ทุกปี"},{ref:"VAR",type:"opt",dose:0,note:"ถ้ายังไม่เคยฉีด"},{ref:"HEPA",type:"opt",dose:2,note:"ถ้าฉีดเข็มแรกตอน 1 ปี"}],
+    package:{label:"แพ็กเกจ 2–3 ปี",normalPrice:2800,proPrice:2300,save:500} },
+  { id:"y4",      label:"4–6 ปี",   sublabel:"ก่อนเข้าประถม",  note:"กระตุ้นชุดสุดท้ายก่อนเข้าโรงเรียน หลังฉีดครบภูมิคุ้มกันอยู่ได้หลายปี",
+    vaccines:[{ref:"DTP",type:"epi",dose:5,note:"บูสเตอร์สุดท้าย"},{ref:"IPV",type:"epi",dose:4,note:"บูสเตอร์สุดท้าย"},{ref:"MMR",type:"epi",dose:2},{ref:"FLU",type:"opt",dose:0,note:"ทุกปี"}],
+    package:{label:"แพ็กเกจก่อนเข้าเรียน",normalPrice:2400,proPrice:1700,save:700} },
+  { id:"y9",      label:"9–12 ปี",  sublabel:"ประถมปลาย",       note:"HPV สำคัญสำหรับเด็กผู้หญิง ฉีดก่อนมีเพศสัมพันธ์ครั้งแรกให้ผลดีที่สุด",
+    vaccines:[{ref:"DTP",type:"epi",dose:6,note:"กระตุ้น"},{ref:"HPV",type:"opt",dose:1,note:"แนะนำสำหรับเด็กหญิง"},{ref:"TYPHOID",type:"opt",dose:1},{ref:"FLU",type:"opt",dose:0,note:"ทุกปี"}],
+    package:{label:"แพ็กเกจวัยเรียน",normalPrice:4500,proPrice:3800,save:700} }
+];
+
+// ── Promo Carousel ──
+var _promoIdx = 0;
+var _promoTimer = null;
+
+function showPromo(idx) {
+  var actives = PROMOS.filter(function(p){ return p.active; });
+  if (!actives.length) return;
+  idx = ((idx % actives.length) + actives.length) % actives.length;
+  _promoIdx = idx;
+  var p = actives[idx];
+  var bar = document.getElementById("promo-bar");
+  document.getElementById("promo-badge").textContent = p.badge || "";
+  document.getElementById("promo-title").textContent = p.title || "";
+  document.getElementById("promo-detail").textContent = p.detail || "";
+  var cta = document.getElementById("promo-cta");
+  cta.textContent = p.cta || ""; cta.href = p.ctaUrl || "#";
+  bar.style.display = "flex";
+  // dots
+  var dots = document.getElementById("promo-dots");
+  if (actives.length > 1) {
+    dots.innerHTML = actives.map(function(_,i){
+      return '<div onclick="showPromo('+i+');resetTimer()" style="width:6px;height:6px;border-radius:50%;background:'+(i===idx?'#fff':'rgba(255,255,255,.4)')+';cursor:pointer;transition:background .2s"></div>';
+    }).join('');
+  } else { dots.innerHTML = ''; }
+}
+
+function resetTimer() {
+  if (_promoTimer) clearInterval(_promoTimer);
+  var actives = PROMOS.filter(function(p){ return p.active; });
+  if (actives.length > 1) {
+    _promoTimer = setInterval(function(){ showPromo(_promoIdx + 1); }, 4000);
+  }
+}
+
+function initPromos() {
+  var actives = PROMOS.filter(function(p){ return p.active; });
+  if (!actives.length) return;
+  showPromo(0);
+  resetTimer();
+}
+
+// ── Load from Google Sheet via JSONP (bypass CORS) ──
+function loadFromSheet() {
+  if (!SHEET_API_URL || SHEET_API_URL === "YOUR_APPS_SCRIPT_URL_HERE") {
+    initPage();
+    return;
+  }
+  var loader = document.getElementById("db-loader");
+  if (loader) loader.style.display = "flex";
+
+  var cbName = "_sheetCb_" + Date.now();
+  var timeout = setTimeout(function() {
+    console.warn("Sheet load timeout, using defaults");
+    cleanup();
+    if (loader) loader.style.display = "none";
+    initPage();
+  }, 8000);
+
+  function cleanup() {
+    clearTimeout(timeout);
+    if (window[cbName]) delete window[cbName];
+    var el = document.getElementById("_jsonp_script");
+    if (el) el.parentNode.removeChild(el);
+  }
+
+  window[cbName] = function(data) {
+    cleanup();
+    try {
+      if (data.clinic) {
+        CLINIC.name    = data.clinic.name    || CLINIC.name;
+        CLINIC.phone   = data.clinic.phone   || CLINIC.phone;
+        CLINIC.line    = data.clinic.line    || CLINIC.line;
+        CLINIC.address = data.clinic.address || CLINIC.address;
+      }
+      if (data.promos && Array.isArray(data.promos)) {
+        PROMOS = data.promos;
+        PROMO = PROMOS[0] || PROMO;
+      } else if (data.promo) {
+        PROMOS = [{
+          active: data.promo.active === "TRUE" || data.promo.active === true,
+          badge:  data.promo.badge  || PROMO.badge,
+          title:  data.promo.title  || PROMO.title,
+          detail: data.promo.detail || PROMO.detail,
+          cta:    data.promo.cta    || PROMO.cta,
+          ctaUrl: data.promo.ctaUrl || PROMO.ctaUrl
+        }];
+        PROMO = PROMOS[0];
+      }
+      if (data.vaccines) {
+        Object.keys(data.vaccines).forEach(function(k) {
+          if (VACCINES[k]) VACCINES[k].price = data.vaccines[k].price;
+        });
+      }
+      if (data.packages) {
+        SCHEDULE.forEach(function(s) {
+          if (data.packages[s.id]) {
+            s.package.label       = data.packages[s.id].label       || s.package.label;
+            s.package.normalPrice = data.packages[s.id].normalPrice || s.package.normalPrice;
+            s.package.proPrice    = data.packages[s.id].proPrice    || s.package.proPrice;
+            s.package.save        = data.packages[s.id].save        || s.package.save;
+          }
+        });
+      }
+    } catch(err) {
+      console.warn("Sheet parse error", err);
+    }
+    if (loader) loader.style.display = "none";
+    initPage();
+  };
+
+  var script = document.createElement("script");
+  script.id = "_jsonp_script";
+  script.src = SHEET_API_URL + "?callback=" + cbName;
+  script.onerror = function() {
+    console.warn("Sheet load failed, using defaults");
+    cleanup();
+    if (loader) loader.style.display = "none";
+    initPage();
+  };
+  document.head.appendChild(script);
+}
+
+function initPage() {
+// ── Promo carousel init ──
+initPromos();
+
+// ── Init ──
+document.getElementById("clinic-name").textContent = CLINIC.name;
+document.getElementById("header-phone").href = "tel:" + CLINIC.phone;
+document.title = "ตารางวัคซีนเด็ก — " + CLINIC.name;
+
+var grid = document.getElementById("age-grid");
+SCHEDULE.forEach(function(s) {
+  var btn = document.createElement("button");
+  btn.className = "age-btn";
+  btn.id = "btn-" + s.id;
+  btn.innerHTML = '<span class="al">' + s.label + '</span><span class="as">' + s.sublabel + '</span>';
+  btn.onclick = function() { selectAge(s.id); };
+  grid.appendChild(btn);
+});
+
+function onSearch(q) {
+  var lower = q.toLowerCase().trim();
+  SCHEDULE.forEach(function(s) {
+    var btn = document.getElementById("btn-" + s.id);
+    if (!lower) { btn.style.display = ""; return; }
+    var hit = s.label.indexOf(q) >= 0 || s.sublabel.indexOf(q) >= 0 ||
+      s.vaccines.some(function(v) {
+        var vx = VACCINES[v.ref];
+        return vx.name.toLowerCase().indexOf(lower) >= 0 || vx.nameTH.indexOf(q) >= 0;
+      });
+    btn.style.display = hit ? "" : "none";
+  });
+}
+
+function selectAge(id) {
+  document.querySelectorAll(".age-btn").forEach(function(b) { b.classList.remove("active"); });
+  var activeBtn = document.getElementById("btn-" + id);
+  if (activeBtn) activeBtn.classList.add("active");
+  var s = SCHEDULE.find(function(x) { return x.id === id; });
+  if (!s) return;
+  document.getElementById("empty-state").style.display = "none";
+  renderDetail(s);
+}
+
+function renderDetail(s) {
+  var epis = s.vaccines.filter(function(v) { return v.type === "epi"; });
+  var opts  = s.vaccines.filter(function(v) { return v.type === "opt"; });
+  var totalEpi = epis.reduce(function(sum,v) { return sum + VACCINES[v.ref].price; }, 0);
+  var totalOpt = opts.reduce(function(sum,v) { return sum + VACCINES[v.ref].price; }, 0);
+  var totalAll = totalEpi + totalOpt;
+  var shots = s.vaccines.length;
+  var pkg = s.package;
+
+  var html = '<div class="metrics">'
+    + '<div class="metric"><div class="ml">วัคซีนครั้งนี้</div><div class="mv blue">' + shots + ' เข็ม</div></div>'
+    + '<div class="metric"><div class="ml">ราคาปกติ</div><div class="mv">฿' + totalAll.toLocaleString() + '</div></div>'
+    + '<div class="metric"><div class="ml">ราคาโปร</div><div class="mv green">฿' + pkg.proPrice.toLocaleString() + '</div></div>'
+    + '</div>'
+    + '<div class="note-box">📌 ' + s.note + '</div>';
+
+  if (epis.length) {
+    html += '<div class="vax-section"><div class="vax-section-title"><span class="badge epi">EPI</span> วัคซีนพื้นฐาน — รัฐกำหนด</div>';
+    epis.forEach(function(v) {
+      var vx = VACCINES[v.ref];
+      html += '<div class="vax-item"><div class="vax-left"><div class="vax-dot epi"></div><div class="vax-info"><div class="vax-name">' + vx.name + '</div><div class="vax-nameTH">' + vx.nameTH + '</div>' + (v.note ? '<div class="vax-note-text">' + v.note + '</div>' : '') + '</div></div><div class="vax-right"><div class="vax-price">฿' + vx.price.toLocaleString() + '</div><div class="vax-dose">เข็มที่ ' + (v.dose || "–") + '</div></div></div>';
+    });
+    html += '</div>';
+  }
+
+  if (opts.length) {
+    html += '<div class="vax-section"><div class="vax-section-title"><span class="badge opt">เสริม</span> วัคซีนเสริม — แนะนำอย่างยิ่ง</div>';
+    opts.forEach(function(v) {
+      var vx = VACCINES[v.ref];
+      html += '<div class="vax-item"><div class="vax-left"><div class="vax-dot opt"></div><div class="vax-info"><div class="vax-name">' + vx.name + '</div><div class="vax-nameTH">' + vx.nameTH + '</div>' + (v.note ? '<div class="vax-note-text">' + v.note + '</div>' : '') + '</div></div><div class="vax-right"><div class="vax-price">฿' + vx.price.toLocaleString() + '</div>' + (v.dose ? '<div class="vax-dose">เข็มที่ ' + v.dose + '</div>' : '') + '</div></div>';
+    });
+    html += '</div>';
+  }
+
+  if (epis.length && opts.length) {
+    html += '<div class="total-bar"><span>EPI พื้นฐาน</span><span>฿' + totalEpi.toLocaleString() + '</span></div>'
+          + '<div class="total-bar"><span>วัคซีนเสริม</span><span>฿' + totalOpt.toLocaleString() + '</span></div>'
+          + '<div class="total-bar highlight"><span>รวมทั้งหมด (ราคาปกติ)</span><span>฿' + totalAll.toLocaleString() + '</span></div>';
+  }
+
+  html += '<div class="pro-card"><div class="pro-icon">🎯</div><div class="pro-info"><div class="pro-label">แพ็กเกจพิเศษ</div><div class="pro-name">' + pkg.label + '</div><div class="pro-detail">ราคาปกติ ฿' + pkg.normalPrice.toLocaleString() + ' • ประหยัด ฿' + pkg.save.toLocaleString() + '</div></div><div class="pro-price-col"><div class="pro-orig">฿' + pkg.normalPrice.toLocaleString() + '</div><div class="pro-price">฿' + pkg.proPrice.toLocaleString() + '</div><div class="pro-save">ประหยัด ฿' + pkg.save.toLocaleString() + '</div></div></div>'
+       + (PROMO.active ? '<div style="background:#E1F5EE;border:1px solid #9FE1CB;border-radius:10px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="background:#0F6E56;color:#fff;border-radius:999px;padding:2px 9px;font-size:10px;font-weight:600;white-space:nowrap">' + PROMO.badge + '</span><div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;color:#085041">' + PROMO.title + '</div><div style="font-size:11px;color:#0F6E56;margin-top:1px">' + PROMO.detail + '</div></div><a href="' + PROMO.ctaUrl + '" target="_blank" style="background:#0F6E56;color:#fff;border-radius:999px;padding:6px 14px;font-size:12px;font-weight:600;text-decoration:none;white-space:nowrap;font-family:Sarabun,sans-serif">' + PROMO.cta + '</a></div>' : '')
+    + '<div class="cta-row"><a href="tel:' + CLINIC.phone + '" class="btn-primary">📅 จองนัดแพ็กเกจโปร</a><a href="https://line.me/ti/p/' + CLINIC.line + '" target="_blank" class="btn-secondary">💬 สอบถาม LINE</a></div>';
+
+  var panel = document.getElementById("detail");
+  panel.innerHTML = html;
+  panel.style.display = "block";
+  panel.scrollIntoView({ behavior:"smooth", block:"nearest" });
+}
+} // end initPage
+
+loadFromSheet();
+</script>
+</body>
+</html>
